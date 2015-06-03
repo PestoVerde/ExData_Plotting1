@@ -31,7 +31,6 @@ library(sqldf)
 
 data.file <-"household_power_consumption.txt"
 data.set <- read.csv.sql(data.file, sql = "select * from file where Date in ('1/2/2007','2/2/2007')", header = TRUE, sep = ";")
-closeAllConnections()
 
 
 # And finally we build the plot. No size adjustment needed since 480x480 is default value for png().
