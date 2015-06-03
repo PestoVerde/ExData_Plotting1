@@ -13,7 +13,6 @@ if("household_power_consumption.txt" %in% dir()) file.in.a.hole <- T
 if (!file.in.a.hole) {
 url.data.file <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 temp.zip.file.name <- "temp.zip"
-data.file<-"household_power_consumption.txt"
 if(Windows) download.file(url.data.file, temp.zip.file.name) else
     download.file(url.data.file, temp.zip.file.name, method="curl")
 unzip(temp.zip.file.name)
@@ -30,7 +29,10 @@ library(sqldf)
 
 # Here we read data from the dates 2007-02-01 and 2007-02-02 using sqldf package.
 
+data.file <-"household_power_consumption.txt"
 data.set <- read.csv.sql(data.file, sql = "select * from file where Date in ('1/2/2007','2/2/2007')", header = TRUE, sep = ";")
+closeAllConnections()
+
 
 # And finally we build the plot. No size adjustment needed since 480x480 is default value for png().
 
@@ -38,3 +40,4 @@ attach(data.set)
 png(filename="plot1.png")
 hist(Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
 dev.off()
+detach(data.set)
